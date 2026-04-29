@@ -168,3 +168,32 @@ pacf(model_2_6, lag.max = 48,
 
 par(mfrow = c(1, 1))
 
+
+
+# Code for an ARMA(13,6) model 
+
+# ARMA(13,6) model
+
+n=200
+ar_coef_arma <- c(0.3, rep(0, 10), -0.5, 0.15)  # AR at lags 1, 12, 13
+ma_coef_arma <- c(-0.4, rep(0, 4), 0.3)           # MA at lags 1, 6
+
+model_arma <- arima.sim(
+  model = list(ar = ar_coef_arma, ma = ma_coef_arma),
+  n = n
+)
+
+par(mfrow = c(3, 1), mar = c(4, 4, 3, 1))
+
+plot(model_arma, type = "l", col = "blue",
+     main = "ARMA(13,6) Model",
+     xlab = "Time", ylab = "Value")
+abline(h = 0, lty = 2, col = "gray")
+
+acf(model_arma, lag.max = 48,
+    main = "Autocorrelation Function (ACF)")
+
+pacf(model_arma, lag.max = 48,
+     main = "Partial Autocorrelation Function (PACF)")
+
+par(mfrow = c(1, 1))
